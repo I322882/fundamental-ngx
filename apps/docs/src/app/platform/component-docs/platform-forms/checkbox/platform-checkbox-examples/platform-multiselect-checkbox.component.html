@@ -1,5 +1,5 @@
-<h3>Template Driven form</h3>
-<div>Checkbox can be pre-selected if value of checkbox matches any value in ngModel directive.</div>
+<h3>Template Driven Form</h3>
+<p>Checkbox can be pre-selected if value of checkbox matches any value in ngModel directive.</p>
 <fdp-form-group [multiLayout]="true">
     <fdp-form-field [id]="'checkbox1'" zone="zLeft" rank="1">
         <fdp-checkbox
@@ -24,7 +24,7 @@
 <br />
 <br />
 
-<div>Multiple Checkboxes connected with same ngModel directive. Multiple checkbox can be selected.</div>
+<p>Multiple checkboxes connected with same ngModel directive. Multiple checkbox can be selected.</p>
 <fdp-form-group [multiLayout]="true">
     <fdp-form-field [id]="'checkbox1'" zone="zLeft" rank="1">
         <fdp-checkbox
@@ -49,7 +49,7 @@
 <br />
 <br />
 
-<div>Multiple Checkboxes connected with same ngModel directive. checkbox with value in ngModel are preselected.</div>
+<p>Multiple checkboxes connected with same ngModel directive. Checkbox with value in ngModel are pre-selected.</p>
 <fdp-form-group [multiLayout]="true">
     <fdp-form-field [id]="'checkbox1'" zone="zLeft" rank="1">
         <fdp-checkbox
@@ -83,10 +83,8 @@
 <br />
 
 <!--Reactive form example-->
-<h3>Reactive/Model Driven form</h3>
-<div>
-    Checkbox can be pre-selected if value of checkbox matches any value in form-control array.
-</div>
+<h3>Reactive/Model Driven Form</h3>
+<p>Checkbox can be pre-selected if value of checkbox matches any value in form-control array.</p>
 <fdp-form-group [multiLayout]="true" [formGroup]="form1">
     <fdp-form-field [id]="'checkbox1'" zone="zLeft" rank="1">
         <fdp-checkbox
@@ -112,9 +110,7 @@
 <br />
 <br />
 
-<div>
-    Multiple Checkboxes connected with same form-control. Multiple checkbox can be selected.
-</div>
+<p>Multiple checkboxes connected with same form-control. Multiple checkbox can be selected.</p>
 <fdp-form-group [multiLayout]="true" [formGroup]="form2">
     <fdp-form-field [id]="'checkbox1'" zone="zLeft" rank="1">
         <fdp-checkbox
@@ -140,9 +136,7 @@
 <br />
 <br />
 
-<div>
-    Multiple Checkboxes connected with same form-control. checkbox with value in form-controls are preselected.
-</div>
+<p>Multiple checkboxes connected with same form-control. Checkbox with value in form-controls are pre-selected.</p>
 <fdp-form-group [multiLayout]="true" [formGroup]="form3">
     <fdp-form-field [id]="'checkbox1'" zone="zLeft" rank="1">
         <fdp-checkbox
