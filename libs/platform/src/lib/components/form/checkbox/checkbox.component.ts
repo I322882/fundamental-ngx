@@ -38,19 +38,6 @@ export class CheckboxComponent extends BaseInput implements AfterViewInit {
     @Input()
     label: string;
 
-    /**
-     * Attached to the aria-label attribute of the host element. In most cases, aria-labelledby will
-     * take precedence so this may be omitted.
-     */
-    @Input('aria-label')
-    ariaLabel: string = '';
-
-    /**
-     * Users can specify the `aria-labelledby` attribute which will be forwarded to the input element
-     */
-    @Input('aria-labelledby')
-    ariaLabelledby: string | null = null;
-
     /** indeterminate state */
     @Input()
     tristate: boolean = false;
@@ -108,7 +95,7 @@ export class CheckboxComponent extends BaseInput implements AfterViewInit {
     /* @hidden
      * stores  formControl values
      */
-    private multiSelectModel: any;
+    private model: any;
 
     /**
      * @hidden checkbox state, used when checkbox is used without form.
@@ -129,7 +116,7 @@ export class CheckboxComponent extends BaseInput implements AfterViewInit {
 
     /** ControlvalueAccessor */
     writeValue(value: any): void {
-        this._setCoreCheckboxControl(value);
+        this._initialiseCheckboxWithControl(value);
         super.writeValue(value);
     }
 
@@ -167,7 +154,7 @@ export class CheckboxComponent extends BaseInput implements AfterViewInit {
             this.corecheckbox.values.falseValue = undefined;
 
             // set core checkbox control value based on platform checkbox control value
-            if (this.value && this.multiSelectModel && this.multiSelectModel.includes(this.value)) {
+            if (this.value && this.model && this.model.includes(this.value)) {
                 this.checkboxCurrentValue = this.value;
             } else {
                 this.checkboxCurrentValue = undefined;
@@ -194,7 +181,7 @@ export class CheckboxComponent extends BaseInput implements AfterViewInit {
     }
 
     /** @hidden
-     * Adds checkbox or removes checkbox from multiSelectModel
+     * Adds checkbox or removes checkbox from model
      */
     private _updateModel(): void {
         if (this.tristate) {
@@ -225,13 +212,13 @@ export class CheckboxComponent extends BaseInput implements AfterViewInit {
             } else {
                 this._removeValue();
             }
-            this.onChange(this.multiSelectModel);
+            this.onChange(this.model);
 
-            // for multiSelect checkbox, all checkbox should have same copy of multiSelectModel.
+            // for multiSelect checkbox, all checkbox should have same copy of model.
             if (this.ngControl) {
-                this.ngControl.control.setValue(this.multiSelectModel);
+                this.ngControl.control.setValue(this.model);
             }
-            this.change.emit(this.multiSelectModel);
+            this.change.emit(this.model);
         }
     }
 
@@ -239,8 +226,8 @@ export class CheckboxComponent extends BaseInput implements AfterViewInit {
      * triggered when checkbox is unchecked, value removed from model
      */
     private _removeValue(): void {
-        if (this.multiSelectModel) {
-            this.multiSelectModel = this.multiSelectModel.filter((val: string) => val !== this.value);
+        if (this.model) {
+            this.model = this.model.filter((val: string) => val !== this.value);
         }
     }
 
@@ -249,20 +236,20 @@ export class CheckboxComponent extends BaseInput implements AfterViewInit {
      */
     private _addValue(): void {
         if (this.corecheckbox.checkboxState === 'indeterminate') {
-            this.multiSelectModel = [...this.multiSelectModel, this.checkboxCurrentValue];
-        } else if (this.multiSelectModel) {
-            this.multiSelectModel = [...this.multiSelectModel, this.checkboxCurrentValue];
+            this.model = [...this.model, this.checkboxCurrentValue];
+        } else if (this.model) {
+            this.model = [...this.model, this.checkboxCurrentValue];
         } else {
-            this.multiSelectModel = [this.checkboxCurrentValue];
+            this.model = [this.checkboxCurrentValue];
         }
     }
 
     /**
      * @hidden
      * @param value , Array or boolean and string/null for tristate
-     * setting core checkbox control value
+     * setting core checkbox control value using passed control value for initial state of checkbox
      */
-    private _setCoreCheckboxControl(value: any): void {
+    private _initialiseCheckboxWithControl(value: any): void {
         // Expecting Formcontrol values as Array [] or boolean
         if (Array.isArray(value)) {
             // handling ngmodel/formcontrol as Array.
@@ -272,8 +259,8 @@ export class CheckboxComponent extends BaseInput implements AfterViewInit {
                 this.checkboxCurrentValue = undefined;
             }
 
-            this.multiSelectModel = value;
-            this.onChange(this.multiSelectModel);
+            this.model = value;
+            this.onChange(this.model);
         } else {
             // handling ngmodel/formcontrol as Binary value and tristate value.
             if (this.isBinary && !this.checkboxCurrentValue && !value) {
